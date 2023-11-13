@@ -9,7 +9,8 @@ public class Game
         gameWindow = new GameWindow();
         while (true)
         {
-            gameWindow.paintFrame(5, 5);
+            gameWindow.myFrame.
+            paintFrame(5, 5);
         }
     }
 }
