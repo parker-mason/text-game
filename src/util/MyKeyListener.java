@@ -2,5 +2,5 @@ package util;
 
 public interface MyKeyListener {
 
-    public void keyTyped();
+    public String getKey(String key);
 }

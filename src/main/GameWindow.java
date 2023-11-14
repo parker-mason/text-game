@@ -1,15 +1,15 @@
 package main;
 
 import util.MyFrame;
+import input.GetKey;
 
 public class GameWindow extends MyFrame
 {
-    protected MyFrame myFrame;
+    protected GetKey getKey;
 
     public GameWindow()
     {
-        myFrame = new MyFrame();
-        this.myFrame = myFrame;
-
+        getKey = new GetKey();
+        this.getKey = getKey;
     }
 }

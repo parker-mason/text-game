@@ -6,11 +6,20 @@ public class Game
     
     public Game()
     {
+        boolean running = true;
         gameWindow = new GameWindow();
-        while (true)
+        while (running)
         {
-            gameWindow.myFrame.
-            paintFrame(5, 5);
+            this.gameWindow.paintFrame(5, 5);
+            this.gameWindow.setKey();
+            switch (this.gameWindow.getKey())
+            {
+                case "q" :
+                    running = false;
+                    break;
+                default :
+                    break;
+            }
         }
     }
 }

@@ -3,23 +3,20 @@ package input;
 import java.util.Scanner;
 import util.MyKeyListener;
 
-import main.GameWindow;
-
 public class GetKey implements MyKeyListener
 {
     Scanner scanner = new Scanner(System.in);
-    private GameWindow gameWindow;
 
-    public GetKey(GameWindow gameWindow)
+    public GetKey()
     {
-        this.gameWindow = gameWindow;
+
     }
 
     @Override
-    public void keyTyped()
+    public String getKey(String key)
     {
-        String key = scanner.next();
-        gameWindow.setKey(key);
+        key = scanner.next();
         scanner.nextLine();
+        return key;
     }
 }

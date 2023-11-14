@@ -1,11 +1,13 @@
 package util;
 
+import input.GetKey;
+
 public class MyFrame
 {
-    protected MyKeyListener keyListener;
+    protected GetKey getKey = new GetKey();
     protected int playerY;
     protected int playerX;
-    protected String key;
+    protected String key = "null";
     protected char[][] frame;
     protected int[][] borderIndex;
 
@@ -165,9 +167,15 @@ public class MyFrame
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-
-    public void setKey(String key)
+    
+    public void setKey()
     {
-        this.key = key;
+        String retrivedKey = this.getKey.getKey(this.key);
+        this.key = retrivedKey;
+    }
+
+    public String getKey()
+    {
+        return this.key;
     }
 }
