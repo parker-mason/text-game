@@ -1,3 +1,4 @@
+# NOT WORKING CURRENTLY
 # text-game
 
 A simple text game that allows you to move around in a 20 x 20 grid. You can interact with items and monsters.
