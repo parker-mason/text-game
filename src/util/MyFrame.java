@@ -4,27 +4,37 @@ import input.GetKey;
 
 public class MyFrame {
     protected GetKey getKey = new GetKey();
-    protected int playerY;
-    protected int playerX;
-    protected String key = "null";
+    protected boolean running = true;
     protected char[][] frame;
+    protected char playerChar = '@';
+    protected char tempPlayerChar = ' ';
     protected int[][] borderIndex;
+    protected int makeCounter = 0;
+    protected int playerX;
+    protected int playerY;
+    protected String key = "null";
 
     public MyFrame() {
+        this.frame = frame;
+        this.playerChar = playerChar;
+        this.borderIndex = borderIndex;
         this.playerX = playerX;
         this.playerY = playerY;
         this.key = key;
-        this.frame = frame;
-        this.borderIndex = borderIndex;
     }
 
     public void makeFrame(int col, int row) {
 
-        // initialize frame, borderIndex, and index
+        // initialize variables
         this.frame = new char[row][col];
         this.borderIndex = new int[(row * 2) + ((col - 2) * 2)][2];
-        int index = 0;
         int frameLength = this.frame.length;
+        int index = 0;
+        if (makeCounter == 0) {
+            this.playerX = (row - 1) / 2;
+            this.playerY = (col - 1) / 2;
+            makeCounter++;
+        }
 
         // iterate through this.frame
         for (int i = 0; i <= this.frame.length - 1; i++) {
@@ -98,13 +108,10 @@ public class MyFrame {
         // iterates through this.frame
         for (int i = 0; i < this.frame.length; i++) {
             for (int j = 0; j < this.frame[i].length; j++) {
-                // assigns player cordinate values
-                this.playerX = (row - 1) / 2;
-                this.playerY = (col - 1) / 2;
 
-                // assigns this.frame middle char (player) to '@'
-                if (i == playerX && j == playerY) {
-                    this.frame[i][j] = '@';
+                // assigns this.frame middle char (player) to playerChar
+                if (i == this.playerY && j == this.playerX) {
+                    this.frame[i][j] = playerChar;
                 } else if (this.frame[i][j] != '#') {
                     this.frame[i][j] = ' ';
                 }
@@ -134,12 +141,83 @@ public class MyFrame {
         System.out.flush();
     }
 
-    public void setKey() {
+    public void getKey() {
         String retrivedKey = this.getKey.getKey(this.key);
         this.key = retrivedKey;
     }
 
-    public String getKey() {
-        return this.key;
+    public boolean running() {
+        return this.running;
+    }
+
+    public boolean playerMovement() {
+        switch (this.key) {
+            case "q":
+                this.running = false;
+                break;
+            case "w":
+                this.moveUp();
+                break;
+            case "a":
+                this.moveLeft();
+                break;
+            case "s":
+                this.moveDown();
+                break;
+            case "d":
+                this.moveRight();
+                break;
+            default:
+                break;
+        }
+        return this.running;
+    }
+
+    public void moveUp() {
+        for (int i = 0; i < this.frame.length; i++) {
+            for (int j = 0; j < this.frame[i].length; j++) {
+                if (this.frame[i][j] == playerChar) {
+                    if (this.frame[i - 1][j] != '#') {
+                        this.playerY--;
+                    }
+                }
+            }
+        }
+    }
+
+    public void moveLeft() {
+        for (int i = 0; i < this.frame.length; i++) {
+            for (int j = 0; j < this.frame[i].length; j++) {
+                if (this.frame[i][j] == playerChar) {
+                    if (this.frame[i][j - 1] != '#') {
+                        this.playerX--;
+                    }
+                }
+            }
+        }
+    }
+
+    public void moveDown() {
+        for (int i = 0; i < this.frame.length; i++) {
+            for (int j = 0; j < this.frame[i].length; j++) {
+                if (this.frame[i][j] == playerChar) {
+                    if (this.frame[i + 1][j] != '#') {
+                        this.playerY++;
+                    }
+                }
+            }
+        }
+    }
+
+    public void moveRight() {
+        for (int i = 0; i < this.frame.length; i++) {
+            for (int j = 0; j < this.frame[i].length; j++) {
+                if (this.frame[i][j] == playerChar) {
+                    if (this.frame[i][j + 1] != '#') {
+                        this.playerX++;
+                    }
+                }
+            }
+        }
     }
 }
