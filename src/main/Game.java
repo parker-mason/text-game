@@ -8,7 +8,7 @@ public class Game {
         while (this.gameWindow.running()) {
             this.gameWindow.paintFrame(col, row);
             this.gameWindow.getKey();
-            gameWindow.playerMovement();
+            this.gameWindow.playerMovement();
         }
     }
 }
