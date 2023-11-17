@@ -13,6 +13,7 @@ public class MyFrame {
     protected int playerX;
     protected int playerY;
     protected String key = "null";
+    protected int row, col;
 
     public MyFrame() {
         this.frame = frame;
@@ -21,20 +22,26 @@ public class MyFrame {
         this.playerX = playerX;
         this.playerY = playerY;
         this.key = key;
+        this.row = row;
+        this.col = col;
     }
 
-    public void makeFrame(int col, int row) {
+    public void makeFrame() {
 
         // initialize variables
-        this.frame = new char[row][col];
-        this.borderIndex = new int[(row * 2) + ((col - 2) * 2)][2];
+        this.frame = new char[this.row][this.col];
+        this.borderIndex = new int[(this.row * 2) + ((this.col - 2) * 2)][2];
         int frameLength = this.frame.length;
         int index = 0;
+        int index1 = 0, index2 = 0;
+        int counter = 0;
         if (makeCounter == 0) {
-            this.playerX = (row - 1) / 2;
-            this.playerY = (col - 1) / 2;
+            this.playerX = (this.row - 1) / 2;
+            this.playerY = (this.col - 1) / 2;
             makeCounter++;
         }
+        // get Dimensions
+        this.getDimensions();
 
         // iterate through this.frame
         for (int i = 0; i <= this.frame.length - 1; i++) {
@@ -76,8 +83,6 @@ public class MyFrame {
             this.borderIndex[index][0] = frameLength - 1;
             index++;
         }
-        int index1 = 0, index2 = 0;
-        int counter = 0;
 
         // iterates through this.borderIndex
         for (int i = 0; i < this.borderIndex.length; i++) {
@@ -111,7 +116,7 @@ public class MyFrame {
 
                 // assigns this.frame middle char (player) to playerChar
                 if (i == this.playerY && j == this.playerX) {
-                    this.frame[i][j] = playerChar;
+                    this.frame[i][j] = this.playerChar;
                 } else if (this.frame[i][j] != '#') {
                     this.frame[i][j] = ' ';
                 }
@@ -119,9 +124,9 @@ public class MyFrame {
         }
     }
 
-    public void paintFrame(int col, int row) {
+    public void paintFrame() {
         // make frame
-        this.makeFrame(col, row);
+        this.makeFrame();
 
         // clear Screen
         this.cls();
@@ -147,12 +152,9 @@ public class MyFrame {
     }
 
     public void getDImensions() {
-        String key = "";
-        int col;
-        int row;
         System.out.print("Enter the game dimensions: ");
-        col = Integer.parseInt(getKey.getKey(key));
-        row = col;
+        this.col = Integer.parseInt(getKey.getKey(this.key));
+        this.row = this.col;
     }
 
     public boolean running() {
@@ -185,7 +187,7 @@ public class MyFrame {
     public void moveUp() {
         for (int i = 0; i < this.frame.length; i++) {
             for (int j = 0; j < this.frame[i].length; j++) {
-                if (this.frame[i][j] == playerChar) {
+                if (this.frame[i][j] == this.playerChar) {
                     if (this.frame[i - 1][j] != '#') {
                         this.playerY--;
                     }
@@ -197,7 +199,7 @@ public class MyFrame {
     public void moveLeft() {
         for (int i = 0; i < this.frame.length; i++) {
             for (int j = 0; j < this.frame[i].length; j++) {
-                if (this.frame[i][j] == playerChar) {
+                if (this.frame[i][j] == this.playerChar) {
                     if (this.frame[i][j - 1] != '#') {
                         this.playerX--;
                     }
@@ -209,7 +211,7 @@ public class MyFrame {
     public void moveDown() {
         for (int i = 0; i < this.frame.length; i++) {
             for (int j = 0; j < this.frame[i].length; j++) {
-                if (this.frame[i][j] == playerChar) {
+                if (this.frame[i][j] == this.playerChar) {
                     if (this.frame[i + 1][j] != '#') {
                         this.playerY++;
                     }
@@ -221,7 +223,7 @@ public class MyFrame {
     public void moveRight() {
         for (int i = 0; i < this.frame.length; i++) {
             for (int j = 0; j < this.frame[i].length; j++) {
-                if (this.frame[i][j] == playerChar) {
+                if (this.frame[i][j] == this.playerChar) {
                     if (this.frame[i][j + 1] != '#') {
                         this.playerX++;
                     }
