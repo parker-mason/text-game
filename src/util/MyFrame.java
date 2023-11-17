@@ -146,6 +146,15 @@ public class MyFrame {
         this.key = retrivedKey;
     }
 
+    public void getDImensions() {
+        String key = "";
+        int col;
+        int row;
+        System.out.print("Enter the game dimensions: ");
+        col = Integer.parseInt(getKey.getKey(key));
+        row = col;
+    }
+
     public boolean running() {
         return this.running;
     }
