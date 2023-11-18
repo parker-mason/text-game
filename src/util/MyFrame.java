@@ -4,7 +4,7 @@ import input.GetKey;
 
 public class MyFrame {
     protected GetKey getKey = new GetKey();
-    protected boolean running = true;
+    protected boolean running = false;
     protected char[][] frame;
     protected char playerChar = '@';
     protected char tempPlayerChar = ' ';
@@ -40,9 +40,6 @@ public class MyFrame {
             this.playerY = (this.col - 1) / 2;
             makeCounter++;
         }
-        // get Dimensions
-        this.getDimensions();
-
         // iterate through this.frame
         for (int i = 0; i <= this.frame.length - 1; i++) {
             // assigns top outer index values
@@ -151,7 +148,7 @@ public class MyFrame {
         this.key = retrivedKey;
     }
 
-    public void getDImensions() {
+    public void getDimensions() {
         System.out.print("Enter the game dimensions: ");
         this.col = Integer.parseInt(getKey.getKey(this.key));
         this.row = this.col;
@@ -159,6 +156,10 @@ public class MyFrame {
 
     public boolean running() {
         return this.running;
+    }
+
+    public void play() {
+        this.running = true;
     }
 
     public boolean playerMovement() {
