@@ -5,18 +5,25 @@ import input.GetKey;
 public class MyFrame {
     protected GetKey getKey = new GetKey();
     protected boolean running = false;
+    protected boolean inventoryOpen = false;
     protected char[][] frame;
+    protected char[][] inventory;
     protected char playerChar = '@';
     protected char tempPlayerChar = ' ';
+    protected char item1 = ' ';
+    protected char item2 = ' ';
+    protected char item3 = ' ';
     protected int[][] borderIndex;
     protected int makeCounter = 0;
     protected int playerX;
     protected int playerY;
-    protected String key = "null";
     protected int row, col;
+    protected String key = "null";
 
     public MyFrame() {
+        this.inventoryOpen = inventoryOpen;
         this.frame = frame;
+        this.inventory = inventory;
         this.playerChar = playerChar;
         this.borderIndex = borderIndex;
         this.playerX = playerX;
@@ -121,6 +128,15 @@ public class MyFrame {
         }
     }
 
+    public void makeIventory() {
+        this.inventory = new char[5][7];
+        for (int i = 0; i < this.inventory.length - 1; i++) {
+            for (int j = 0; j < this.inventory[i].length - 1; j++) {
+                this.inventory[i][j] = 'I';
+            }
+        }
+    }
+
     public void paintFrame() {
         // make frame
         this.makeFrame();
@@ -128,10 +144,26 @@ public class MyFrame {
         // clear Screen
         this.cls();
 
-        // print frame
-        for (int i = 0; i < this.frame.length; i++) {
-            for (int j = 0; j < this.frame[i].length; j++) {
-                System.out.print(this.frame[i][j] + " ");
+        // print frame or Inventory
+        if (this.inventoryOpen) {
+            this.paintInventory();
+        } else if (!this.inventoryOpen) {
+            for (int i = 0; i < this.frame.length; i++) {
+                for (int j = 0; j < this.frame[i].length; j++) {
+                    System.out.print(this.frame[i][j] + " ");
+                }
+                System.out.println();
+            }
+        } else {
+            System.out.println("Inventory ERROR");
+        }
+    }
+
+    public void paintInventory() {
+        this.makeIventory();
+        for (int i = 0; i < this.inventory.length - 1; i++) {
+            for (int j = 0; j < this.inventory[i].length - 1; j++) {
+                System.out.print(this.inventory[i][j] + " ");
             }
             System.out.println();
         }
@@ -154,6 +186,10 @@ public class MyFrame {
         this.row = this.col;
     }
 
+    public void toggleInventory() {
+        this.inventoryOpen = !this.inventoryOpen;
+    }
+
     public boolean running() {
         return this.running;
     }
@@ -168,17 +204,35 @@ public class MyFrame {
                 this.running = false;
                 break;
             case "w":
-                this.moveUp();
-                break;
+                if (this.inventoryOpen == true) {
+                    break;
+                } else {
+                    this.moveUp();
+                    break;
+                }
             case "a":
-                this.moveLeft();
-                break;
+                if (this.inventoryOpen == true) {
+                    break;
+                } else {
+                    this.moveLeft();
+                    break;
+                }
             case "s":
-                this.moveDown();
-                break;
+                if (this.inventoryOpen == true) {
+                    break;
+                } else {
+                    this.moveDown();
+                    break;
+                }
             case "d":
-                this.moveRight();
-                break;
+                if (this.inventoryOpen == true) {
+                    break;
+                } else {
+                    this.moveRight();
+                    break;
+                }
+            case "e":
+                this.toggleInventory();
             default:
                 break;
         }
