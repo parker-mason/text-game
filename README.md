@@ -19,7 +19,7 @@ My project's code was based on the base code from a tutorial by <a href="https:/
   * attack options
   * different attacks
 - add damage system
-  * different damamge for each atack
+  * different damamge for each attack
 - add health system
   * health bar
   * healing
