@@ -12,8 +12,14 @@ My project's code was based on the base code from a tutorial by <a href="https:/
   * paint inventory
   * item spawning
   * item pickup
-- add monsters
-  * spawn monsters
+- add creatures
+  * spawn creatures
 - add attack system
-  * 
+  * add battle scene
+  * attack options
+  * different attacks
+- add damage system
+  * different damamge for each atack
 - add health system
+  * health bar
+  * healing
