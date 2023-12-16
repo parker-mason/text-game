@@ -14,7 +14,6 @@ public class MyFrame {
     protected char item2 = ' ';
     protected char item3 = ' ';
     protected int[][] borderIndex;
-    protected int makeCounter = 0;
     protected int playerX;
     protected int playerY;
     protected int row, col;
@@ -34,117 +33,51 @@ public class MyFrame {
     }
 
     public void makeFrame() {
-
-        // initialize variables
         this.frame = new char[this.row][this.col];
-        this.borderIndex = new int[(this.row * 2) + ((this.col - 2) * 2)][2];
-        int frameLength = this.frame.length;
-        int index = 0;
-        int index1 = 0, index2 = 0;
-        int counter = 0;
-        if (makeCounter == 0) {
-            this.playerX = (this.row - 1) / 2;
-            this.playerY = (this.col - 1) / 2;
-            makeCounter++;
-        }
-        // iterate through this.frame
-        for (int i = 0; i <= this.frame.length - 1; i++) {
-            // assigns top outer index values
-            this.borderIndex[index][1] = i;
-            this.borderIndex[index][0] = 0;
-            index++;
-        }
-        for (int i = 0; i <= (this.frame.length - 1); i++) {
-            for (int j = 0; j <= (this.frame[i].length - 1); j++) {
-                // check for outer frame index values
-                for (int k = 0; k == 0 || k == (this.frame[i].length - 1); k += (this.frame[i].length - 1)) {
-                    if (j + (this.frame[i].length - 1) <= (this.frame.length - 1)) {
-                        if (i == 0) {
+        this.borderIndex = new int[row * col][2];
+        this.playerX = (this.row - 1) / 2;
+        this.playerY = (this.col - 1) / 2;
 
-                        } else if (i == frameLength - 1) {
-
-                        } else {
-                            if (k == 0 && i != 0) {
-                                // assign side outer index values
-                                this.borderIndex[index][1] = k;
-                                this.borderIndex[index][0] = i;
-                                index++;
-                            } else if (k == (frameLength - 1) && i != 0) {
-                                // assign side outer index values
-                                this.borderIndex[index][1] = k;
-                                this.borderIndex[index][0] = i;
-                                index++;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        // iterates through this.frame
-        for (int i = 0; i <= (this.frame.length - 1); i++) {
-            // assigns bottom outer index values
-            this.borderIndex[index][1] = i;
-            this.borderIndex[index][0] = frameLength - 1;
-            index++;
-        }
-
-        // iterates through this.borderIndex
-        for (int i = 0; i < this.borderIndex.length; i++) {
-            for (int j = 0; j < this.borderIndex[i].length; j++) {
-                int num = this.borderIndex[i][j];
-
-                // getting border indecies for this.frame
-                if (j == 0) {
-                    index1 = num;
-                } else if (j == 1) {
-                    index2 = num;
-                } else {
-                    System.out.println("Index Error");
-                }
-
-                // assign frame border chars to '#'
-                if (counter == 0) {
-                    counter++;
-                } else if (counter == 1) {
-                    this.frame[index1][index2] = '#';
-                } else {
-
-                    System.out.println("Assignment Error");
-                }
-            }
-        }
-
-        // iterates through this.frame
+        int b1 = 0;
+        int b2 = 0;
         for (int i = 0; i < this.frame.length; i++) {
             for (int j = 0; j < this.frame[i].length; j++) {
-
-                // assigns this.frame middle char (player) to playerChar
-                if (i == this.playerY && j == this.playerX) {
-                    this.frame[i][j] = this.playerChar;
-                } else if (this.frame[i][j] != '#') {
-                    this.frame[i][j] = ' ';
+                if (b2 == 0) {
+                    this.borderIndex[b1][b2] = i;
+                    this.borderIndex[b1][b2 + 1] = j;
+                    b1++;
+                } else {
+                    b2 = 0;
                 }
             }
         }
-    }
-
-    public void makeIventory() {
-        this.inventory = new char[5][7];
-        for (int i = 0; i < this.inventory.length - 1; i++) {
-            for (int j = 0; j < this.inventory[i].length - 1; j++) {
-                this.inventory[i][j] = 'I';
+        for (int i = 0; i < this.borderIndex.length; i++) {
+            for (int j = 0; j < this.borderIndex[i].length; j++) {
+                if (j == 0 && this.borderIndex[i][j] == 0) {
+                    this.frame[this.borderIndex[i][j]][this.borderIndex[i][j + 1]] = '#';
+                } else if (j == 0 && this.borderIndex[i][j] == this.frame.length - 1) {
+                    this.frame[this.borderIndex[i][j]][this.borderIndex[i][j + 1]] = '#';
+                } else if (j == 0 && (this.borderIndex[i][j] != 0 || this.borderIndex[i][j] != this.frame.length - 1)) {
+                    if (this.borderIndex[i][j + 1] == 0 || this.borderIndex[i][j + 1] == this.frame.length - 1) {
+                        this.frame[this.borderIndex[i][j]][this.borderIndex[i][j + 1]] = '#';
+                    }
+                } else {
+                    if (j == 0 && this.frame[this.borderIndex[i][j]][this.borderIndex[i][j + 1]] != '#'
+                            && (this.borderIndex[i][j] != this.playerY || this.borderIndex[i][j + 1] != this.playerX)) {
+                        this.frame[this.borderIndex[i][j]][this.borderIndex[i][j + 1]] = ' ';
+                    } else if (j == 1 && this.frame[this.borderIndex[i][j - 1]][this.borderIndex[i][j]] != '#'
+                            && (this.borderIndex[i][j - 1] != this.playerY || this.borderIndex[i][j] != this.playerX)) {
+                        this.frame[this.borderIndex[i][j - 1]][this.borderIndex[i][j]] = ' ';
+                    }
+                    this.frame[this.playerY][this.playerX] = this.playerChar;
+                }
             }
         }
     }
 
     public void paintFrame() {
-        // make frame
         this.makeFrame();
-
-        // clear Screen
         this.cls();
-
-        // print frame or Inventory
         if (this.inventoryOpen) {
             this.paintInventory();
         } else if (!this.inventoryOpen) {
@@ -159,6 +92,15 @@ public class MyFrame {
         }
     }
 
+    public void makeIventory() {
+        this.inventory = new char[5][7];
+        for (int i = 0; i < this.inventory.length - 1; i++) {
+            for (int j = 0; j < this.inventory[i].length - 1; j++) {
+                this.inventory[i][j] = 'I';
+            }
+        }
+    }
+
     public void paintInventory() {
         this.makeIventory();
         for (int i = 0; i < this.inventory.length - 1; i++) {
@@ -169,8 +111,11 @@ public class MyFrame {
         }
     }
 
+    public void toggleInventory() {
+        this.inventoryOpen = !this.inventoryOpen;
+    }
+
     public void cls() {
-        // clear screen
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
@@ -184,10 +129,6 @@ public class MyFrame {
         System.out.print("Enter the game dimensions: ");
         this.col = Integer.parseInt(getKey.getKey(this.key));
         this.row = this.col;
-    }
-
-    public void toggleInventory() {
-        this.inventoryOpen = !this.inventoryOpen;
     }
 
     public boolean running() {
