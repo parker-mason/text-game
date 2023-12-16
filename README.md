@@ -8,6 +8,18 @@ My project's code was based on the base code from a tutorial by <a href="https:/
 
 ## TODO LIST
 - add items and inventory system
-- add monsters
+  * make/update inventory
+  * paint inventory
+  * item spawning
+  * item pickup
+- add creatures
+  * spawn creatures
 - add attack system
+  * add battle scene
+  * attack options
+  * different attacks
+- add damage system
+  * different damamge for each attack
 - add health system
+  * health bar
+  * healing
